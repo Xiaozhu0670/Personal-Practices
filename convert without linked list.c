@@ -1,3 +1,5 @@
+//这是一个中缀转后缀的c语言，无使用链表。
+//This is a C program, which converts infix to postfix without using linked lists.
 #include <stdio.h>
 
 int symbol(int i, int n, int b, int arr[n], char smb[n]);
