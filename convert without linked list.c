@@ -15,11 +15,14 @@ int main(){
     char smb[100000];//以上用于四则运算符
 
     printf("please write the Infix Expression:");
-    while((c = getchar()) != '\n'){
+    do{
+
         str[i] = (char)c;
         i++;
     }//no problem
-    str[i] = 'F';//基本没啥用，当时还以为有用
+    while((c = getchar()) != '\n');
+
+    str[i] = 'F';
 
     int total = i;
     i = 0;
@@ -29,7 +32,7 @@ int main(){
         if('0' <= str[i] && str[i] <= '9'){
             putchar(str[i]);
 
-            if(str[i+1] == '+' || str[i+1] == '-' || str[i+1] == '*' || str[i+1] == '/' || str[i+1] == '(' || str[i+1] == ')'){
+            if(str[i+1] == '+' || str[i+1] == '-' || str[i+1] == '*' || str[i+1] == '/' || str[i+1] == '(' || str[i+1] == ')' || str[i+1] == 'F'){
                 putchar(' ');
             
             }
@@ -49,6 +52,8 @@ int main(){
 
             b = symbol(i, n, b, arr, smb);
             
+
+
            if(0 < arr[n] && arr[n] < 5){//防止出bug，之前老是莫名n++，猎奇哈。
             n++;
            }
@@ -58,17 +63,21 @@ int main(){
 
     if (arr[n] == 0 && arr[n-1] != 0){//感觉没什么用，但当时已经写下来了，能跑就没删if语句
         int a = n - 1; 
+        int c = b;//记录当前已经输入了多个四则符号
         while(b < n){//b代表的是已经输入的四则运算符的个数，n代表是总的四则运算符的个数，若b < n,说明还有四则运算符没有输入。
             if(arr[a] > 0 && arr[a] < 3){//保证没有左右括号
-                putchar(' ');
+                
                 putchar(smb[a]);
+                if(a != c){
+                    putchar(' ');
+                }
             }
             a--;
             b++;
         }
     }
     
-
+    printf("\n");
     return 0;
 }
 
@@ -96,8 +105,8 @@ int symbol(int i, int n, int b, int arr[n], char smb[n]){
 int foursymbol(int i, int total, char str[i]){//识别运算符号
     int b = 0;    
     int n = 0;
-    int arr[100000];
-    char smb[100000];
+    int arrs[100000];
+    char smbs[100000];
 
     while(i <= total){//后端,从左往右
         //识别到是数字
@@ -111,34 +120,38 @@ int foursymbol(int i, int total, char str[i]){//识别运算符号
         }
         else{//识别到是运算符
             if(str[i] == '+' || str[i] == '-'){
-                arr[n] = 1;
-                smb[n] = (char)str[i];
+                arrs[n] = 1;
+                smbs[n] = (char)str[i];
             }
             else if(str[i] == '*' || str[i] == '/'){
-                arr[n] = 2;
-                smb[n] = (char)str[i];
+                arrs[n] = 2;
+                smbs[n] = (char)str[i];
             }
             else if(str[i] == ')'){//识别是),赋值为4
-                arr[n] = 4;
-                smb[n] = (char)str[i];
+                arrs[n] = 4;
+                smbs[n] = (char)str[i];
             }
 
-            b = symbol(i, n,b,arr,smb);
+            b = symbol(i, n,b,arrs,smbs);
 
-            if (arr[n] == 4){
+            if (arrs[n] == 4){
 
-                if (arr[n-1] != 0){//感觉没什么用，但当时已经写下来了，能跑就没删if语句
+                if (arrs[n-1] != 0){//感觉没什么用，但当时已经写下来了，能跑就没删if语句
                     int a = n - 1; 
                     while(b < n){//b代表的是已经输入的四则运算符的个数，n代表是总的四则运算符的个数，若b < n,说明还有四则运算符没有输入。
-                        if(arr[a] > 0 && arr[a] < 3){//保证没有左右括号
+                        if(arrs[a] > 0 && arrs[a] < 3){//保证没有左右括号
                             if(n - b == 1){
-                                putchar(smb[a]);
+                                putchar(smbs[a]);
                             }
                             else if(n - b != 1){
-                                putchar(' ');
-                                putchar(smb[a]);
+                                if('0' <= str[i-1] && str[i-1] <= '9'){
+                                }
+                                else{
+                                    putchar(' ');
+                                }
+                                putchar(smbs[a]);
                             }
-                            if(str[i+1] != NULL){
+                            if(str[i+1] != '\n'){
                                 putchar(' ');
                             }
                         }
@@ -149,7 +162,7 @@ int foursymbol(int i, int total, char str[i]){//识别运算符号
                 break;
             }
             
-            if(0 < arr[n] && arr[n] < 5){//防止出bug，之前老是莫名n++，猎奇哈。
+            if(0 < arrs[n] && arrs[n] < 5){//防止出bug，之前老是莫名n++，猎奇哈。
             n++;
            }
         }
@@ -177,3 +190,4 @@ void test(int n, int b, int arr[n], char smb[n]){
     }
 }
 //the end of third function
+
