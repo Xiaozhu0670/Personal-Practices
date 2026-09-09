@@ -16,15 +16,17 @@ int main(){
 
     printf("please write the Infix Expression:");
     do{
-
+        c = getchar();
         str[i] = (char)c;
-        i++;
+        if (str[i] != ' '){
+            i++;
+        }
     }//no problem
-    while((c = getchar()) != '\n');
+    while((char)c != '\n');
 
-    str[i] = 'F';
+    str[i-1] = 'F';
 
-    int total = i;
+    int total = i-1;
     i = 0;
  
     while(i <= total){//后端,从左往右
@@ -51,8 +53,6 @@ int main(){
             }
 
             b = symbol(i, n, b, arr, smb);
-            
-
 
            if(0 < arr[n] && arr[n] < 5){//防止出bug，之前老是莫名n++，猎奇哈。
             n++;
@@ -190,4 +190,3 @@ void test(int n, int b, int arr[n], char smb[n]){
     }
 }
 //the end of third function
-
