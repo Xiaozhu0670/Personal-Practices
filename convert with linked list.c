@@ -1,4 +1,5 @@
-//test：12+3*2*(1+4)+5/4+1
+//这是一个中缀转后缀的c语言，使用链表。
+//This is a C program, which converts infix to postfix with using linked lists.
 #include <stdio.h>
 
 int symbol(int n, int b, int arr[n], char smb[n]);
